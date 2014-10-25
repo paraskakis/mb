@@ -34,6 +34,7 @@ exports.server=http.createServer(function (req, res) {
 		//debugging output into the terminal
 		res.writeHead(201, {'Content-Type': 'text/plain'});
 		//sets the right header and status code	
+		res.write(message);
 		res.end(message);
 		//out put message, should add object id
 	}
@@ -50,7 +51,7 @@ exports.server=http.createServer(function (req, res) {
 	else {
 		res.writeHead(200, {'Content-Type': 'text/plain'});
 		//sets the right header and status code
-		res.end('Hello World\n');
+		res.end('Empty\n');
 	};
 	console.log(req.method);
 
