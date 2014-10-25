@@ -23,21 +23,24 @@ exports.server=http.createServer(function (req, res) {
 	if (req.method=="POST"&&req.url=="/messages") {
 		//if method is POST and URL is messages/ add message to the array
 		var message='';
-		req.on('data', function(data, message){
+		req.on('data', function(data, msg){
 			console.log(data.toString('utf-8'));
 			message=exports.addMessage(data.toString('utf-8'));
 			//data is type of Buffer and must be converted to string with encoding UTF-8 first
 			//adds message to the array
 		})
-		console.log(util.inspect(message, true, null));
-		console.log(util.inspect(messages, true, null));
-		//debugging output into the terminal
-		res.writeHead(201, {'Content-Type': 'text/plain'});
-		//sets the right header and status code	
-		res.write(message);
-		res.end(message);
-		//out put message, should add object id
-	}
+		// *NOTE* doies not work!!! Race condition  - need req.on('end', function(){}
+		req.on('end', function(){
+			console.log(util.inspect(message, true, null));
+			console.log(util.inspect(messages, true, null));
+			//debugging output into the terminal
+			res.writeHead(201, {'Content-Type': 'text/plain'});
+			//sets the right header and status code	
+			res.end(message);
+			//out put message, should add object id
+		})
+
+	} else
 	if (req.method=="GET"&&req.url=="/messages") {
 	//if method is GET and URL is /messages output list of messages
 		var body=exports.getMessages();
