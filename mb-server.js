@@ -32,7 +32,7 @@ exports.server=http.createServer(function (req, res) {
 		console.log(util.inspect(message, true, null));
 		console.log(util.inspect(messages, true, null));
 		//debugging output into the terminal
-		res.writeHead(200, {'Content-Type': 'text/plain'});
+		res.writeHead(201, {'Content-Type': 'text/plain'});
 		//sets the right header and status code	
 		res.end(message);
 		//out put message, should add object id
